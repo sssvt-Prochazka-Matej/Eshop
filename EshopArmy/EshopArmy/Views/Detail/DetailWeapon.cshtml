@@ -1,0 +1,81 @@
+﻿@model EshopArmy.BusinessObjects.Weapon
+
+@{
+    ViewData["Title"] = "WeaponDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    main{
+        display:flex;
+        max-width: 1200px;
+        margin:0 auto;
+    }
+    img{
+        flex:1;
+        max-width: 500px;
+        max-height: 400px;
+        object-fit:contain;
+    }
+    .info{
+        flex:1;
+        margin: 25px;
+    }
+    .subhead {
+        display:flex;
+    }
+    .price{
+        color:red;
+        font-weight:bold;
+        flex:1;
+        margin-right: 10px;
+    }
+    .storage{
+        flex:1;
+        text-align:end;
+    }
+    .buy{
+        display:flex;
+    }
+    .buy a{
+        color:white;
+        background-color:olive;
+        padding: 10px 20px;
+        border-radius:5px;
+        text-decoration:none;
+    }
+    .info a:hover{
+        background-color:darkolivegreen;
+    }
+
+</style>
+@if(Convert.ToInt32(Model.UnitsInStorage) <= 0)
+ {
+    <style>
+        .buy{
+            display:none;
+        }
+    </style>
+ }
+
+
+<main>
+    <img src="@Model.Picture" alt="img missing" />
+    <div class="info">
+        <h2>@Model.Name</h2>
+        <span class="subhead">
+            <span class="price">@Model.Price Kč</span>
+            @if (Convert.ToInt32(Model.UnitsInStorage) > 0)
+            {
+            <span class="storage" style="color:limegreen">Na&nbsp;skladě</span>
+            }
+            else
+            {
+                <span class="storage" style="color:grey">Dočasně&nbsp;nedostupné</span>
+            }
+        </span>
+        <hr/>
+        <p>@Model.Description</p>
+        <span class="buy"><a href="/detail/AddToBasket/@Model.Id">Koupit</a></span>
+    </div>
+</main>

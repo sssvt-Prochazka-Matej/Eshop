@@ -1,0 +1,65 @@
+﻿@model EshopArmy.BusinessObjects.Weapon
+@{
+    ViewData["Title"] = "EditWeapon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    form{
+        display:flex;
+        flex-direction:column ;
+    }
+    label{
+        flex:1;
+    }
+    .id{
+        display:none;
+    }
+</style>
+
+<form method="post" action="/manage/editWeapon">
+    <label class="id">
+        ID
+        <input type="text" name="Id" value="@Model.Id">
+    </label>
+    <label>
+        Name
+        <input type="text" name="Name" value="@Model.Name">
+    </label>
+    <label>
+        Type
+        <select name="Type">
+            <option value="@Model.Type">@Model.Type</option>
+            <option value="assault rifle">Assault rifle</option>
+            <option value="marksman rifle">Marksman rifle</option>
+            <option value="bolt-action rifle">Bolt-action rifle</option>
+            <option value="machine gun">Machine gun</option>
+            <option value="smg">SMG</option>
+            <option value="pistol">Pistol</option>
+        </select>
+    </label>
+    <label>
+        Price
+        <input type="text" name="Price" value="@Model.Price">
+    </label>
+    <label>
+        InStorage
+        <input type="number" name="UnitsInStorage" value="@Model.UnitsInStorage">
+    </label>
+    <label>
+        Description
+        <textarea name="Description" placeholder="description">@Model.Description</textarea>
+    </label>
+    <label>
+        Picture
+        <input type="text" name="Picture" value="@Model.Picture">
+    </label>
+    @if (Model.Id == 0)
+    {
+        <input type="submit" value="Add">
+    }
+    else
+    {
+        <input type="submit" value="Edit">
+    }
+</form>

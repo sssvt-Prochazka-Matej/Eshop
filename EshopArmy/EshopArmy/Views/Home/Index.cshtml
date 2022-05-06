@@ -1,0 +1,85 @@
+﻿@model EshopArmy.Models.WeaponList  
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<body>
+
+    <style>
+
+        main {
+            width: 1200px;
+            margin: 0 auto;
+        }
+        .weapon {
+            display: grid;
+            grid-template-rows: 150px 50px 1fr;
+            grid-template-columns: 1fr;
+            margin: 5px;
+        }
+
+        .weapon img {
+                align-self: center;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+        }
+        .headerOfProduct {
+            flex: 1;
+            flex-grow: 0;
+        }
+        .block{
+            display:grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        .price{
+            color: red;
+            flex:1;
+            font-weight:bold;
+        }
+        .name{
+            flex:1;
+            align-self:flex-start;
+            margin:0;
+        }
+        .headerOfProduct{
+            display:flex;
+            flex-direction:column;
+        }
+        .block a:hover{
+            background-color:lightgray;
+        }
+    </style>
+
+
+    <main>
+        @for(int ii = 0; ii < Model.Weapons.Count; ii= ii + 3)
+        {          
+        <div class="block">
+            @for (int i = 0; i < 3; i++)
+            {
+                if (i + ii < Model.Weapons.Count)
+                {
+                    <a href="/detail/DetailWeapon/@Model.Weapons.ToList()[i+ii].Id" style="text-decoration: none !important; color:black!important; ">
+                        <div class="weapon">
+
+                            <img src="@Model.Weapons.ToList()[i + ii].Picture" alt="img missing" />
+                            <div class="headerOfProduct">
+                                <h4 class="name">@Model.Weapons.ToList()[i + ii].Name </h4>
+                                <span class="price">@Model.Weapons.ToList()[i + ii].Price kč</span>
+                            </div>
+                            <p>@Model.Weapons.ToList()[i + ii].Description</p>
+                        </div>
+                    </a>
+                }
+            }
+        </div>
+        <hr>
+        }
+
+
+    </main>
+
+</body>

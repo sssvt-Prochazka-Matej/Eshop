@@ -1,0 +1,120 @@
+﻿@model EshopArmy.Models.BasketList
+@using Microsoft.AspNetCore.Identity;
+@using System.Security.Claims;
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Košík";
+}
+
+
+
+<style>
+    .invisible {
+        display: none;
+    }
+
+    .price {
+        font-weight: bold;
+    }
+
+    img {
+        width: 200px;
+        height: 50px;
+        object-fit: cover;
+    }
+
+    #total {
+        color: red;
+        font-weight: bold;
+    }
+
+    .continue a {
+        color: white;
+        background-color: olive;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+        .continue a:hover {
+            background-color: darkolivegreen;
+        }
+</style>
+
+
+
+
+<h1>Košík</h1>
+<table class="table">
+    <tr>
+        <th></th>
+        <th>Weapon</th>
+        <th>Amount</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Basketlist)
+    {
+        @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == item.UserID)
+        {
+            <tr>
+                <td><img src="@item.Weapon.Picture" alt="Alternate Text" /></td>
+                <td>@item.Weapon.Name</td>
+                <td>
+                    <form action="/basket/Save" method="post" class="form" id="@item.Weapon.Id">
+                        <input type="number" name="Amount" value="@item.Ammout" class="amount" min="1" onchange="postForm(@item.Weapon.Id)">
+                        <input type="number" name="id" value="@item.ID" class="invisible">
+                    </form>
+                </td>
+                <td class="price"></td>
+                <td class="invisible">
+                    <input type="number" name="" value="@item.Weapon.Price" class="pricePerU">
+                </td>
+                <td><a href="basket/remove/@item.ID">Delete</a></td>
+            </tr>
+        }
+    }
+    <tr>
+        <td class="continue"><a href="/home">Pokračovat v nákupu</a></td>
+        <td></td>
+        <td></td>
+        <td id="total"></td>
+        <td class="continue">
+            <a href="#">Shrnutí objednávky</a>
+        </td>
+    </tr>
+</table>
+
+
+
+<script>
+
+    function calculate() {
+
+        var amounts = document.getElementsByClassName('amount')
+        var pricesPerU = document.getElementsByClassName('pricePerU')
+        var prices = document.getElementsByClassName('price')
+
+        let sum = 0;
+
+        for (let i = 0; i < amounts.length; i++) {
+            sum += amounts[i].value * pricesPerU[i].value;
+            prices[i].innerText = amounts[i].value * pricesPerU[i].value + " Kč";
+        }
+        document.getElementById('total').innerText = sum + " Kč"
+    }
+    window.onload = calculate();
+
+    function postForm(weaponId) {
+
+        var form = document.getElementById(weaponId);
+        form.submit();
+
+    }
+
+</script>
+
+
+

@@ -1,0 +1,47 @@
+﻿@model EshopArmy.Models.WeaponList
+@{
+    ViewData["Title"] = "Manage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .add{
+        color: white;
+        background-color: dodgerblue;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .add:hover{
+        background-color:royalblue;
+        text-decoration:none;
+        color:white;
+    }
+</style>
+
+
+<h1>Weapons</h1>
+
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Price</th>
+        <th>InStorage</th>
+    </tr>
+    @foreach (var weapon in Model.Weapons)
+    {   
+    <tr>
+        <td>@weapon.Id</td>
+        <td>@weapon.Name</td>
+        <td>@weapon.Type</td>
+        <td>@weapon.Price</td>
+        <td>@weapon.UnitsInStorage</td>
+        <td><a href="Manage/EditWeapon/@weapon.Id">Edit</a></td>
+        <td><a href="Manage/Delete/@weapon.Id">Delete</a></td>
+    </tr>
+    }
+</table>
+
+<a class="add" href="/manage/EditWeapon">Add</a>
